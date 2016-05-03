@@ -4,7 +4,7 @@ import random
 import os
 
 def randomgenerator():
-    number = random.randint(1, 4)
+    number = random.randint(1, 5)
 
     if number == 1:
         os.system('mpg123 singing1.mp3')
