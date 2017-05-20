@@ -1,5 +1,6 @@
 from sense_hat import SenseHat
 import time
+import os
 
 sense = SenseHat()
 
@@ -31,20 +32,22 @@ pet2 = [
     e, e, e, e, e, e, e, e, 
     ]
 
-def walking():
+def sleep():
+    sense.clear()
+
+def walk():
+    os.system('flite -t "Hello everyone!" &')
     for i in range(10):
         sense.set_pixels(pet1)
         time.sleep(0.5)
         sense.set_pixels(pet2)
         time.sleep(0.5)
-
-x, y, z = sense.get_accelerometer_raw().values()
-
-while x<2 and y<2 and z<2:
+    sleep()
+     
+while True:
     x, y, z = sense.get_accelerometer_raw().values()
-    
-walking()
-time.sleep(0.5)
-sense.clear()
+    if x>1 or y>1 or z>1:
+        walk()
+        
 
 
