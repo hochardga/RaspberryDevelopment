@@ -10,8 +10,12 @@ puts ""
 [
   'new_fighter_template',
   'bowser',
+  'captain_falcon',
   'flash',
+  'ganondorf',
+  'little_mac',
   'princess_peach',
+  'simon',
   # <KIDS> if you create a new fighter file
   # then you must add a line above
 ].each {|file| require_relative file}

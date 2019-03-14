@@ -13,7 +13,7 @@ class Fighter
     @opening_line ||= "Hi, I am a fighter"
 
     @hp ||= 25
-    @starting_hp = @hp
+    @starting_hp = @hp.clone
 
     @moves ||= []
     @moves << MovesList::BORING_PUNCH
