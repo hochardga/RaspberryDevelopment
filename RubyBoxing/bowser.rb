@@ -1,5 +1,5 @@
 class Bowser < Fighter
-  def initialize color
+  def initialize
     @name = "Bowser"
     @opening_line = "WRAAAAHHHH!!!!!"
     @moves = [
@@ -7,6 +7,6 @@ class Bowser < Fighter
         Move.new('shell spin', stun_chance: 40),
       ]
     @special_move = SpecialMove.new 'brrrrragh!', hit_damage: 80
-    super(31) # red
+    super 31 # red
   end
 end

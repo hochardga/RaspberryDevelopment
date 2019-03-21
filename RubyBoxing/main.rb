@@ -1,30 +1,20 @@
 # <KIDS> Use this file to run the program
-require_relative '_colorize'
+
+require_relative('init/_init')
 
 puts "Fighting".yellow
 puts "   using the Ruby programming language".yellow
 puts ""
 
-['_move', '_special_move', '_moves_list', '_special_moves_list', '_fighter', '_match', '_test', '_tournament', '_who_is_better'].each {|file| require_relative file}
-
-[
-  'new_fighter_template',
-  'bowser',
-  'captain_falcon',
-  'flash',
-  'ganondorf',
-  'little_mac',
-  'princess_peach',
-  'simon',
-  # <KIDS> if you create a new fighter file
-  # then you must add a line above
-].each {|file| require_relative file}
-
 # <KIDS> Edit the line below to change who is fighting who
-# EXAMPLE: Match.new(Fighter, Fighter).fight
 
-Match.new(Fighter, Fighter).fight
+teams = []
+teams << [Fighter]
+teams << [Flash]
+#teams << [PrincessPeach, Bowser]
+#teams << [MrsVentrudo, RobertTheJanator]
 
+Match.new(teams).fight
+
+#WhoIsBetter.between teams
 #Test.test
-#WhoIsBetter.between Fighter, Flash
-#Tournament.begin Fighter, PrincessPeach, Bowser, Flash, NewFighterTemplate

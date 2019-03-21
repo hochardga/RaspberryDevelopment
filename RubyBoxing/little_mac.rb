@@ -1,5 +1,5 @@
 class LittleMac < Fighter
-  def initialize color
+  def initialize
     @name = "Little Mac"
     @opening_line = "Hey, what's that?!?!"
     @moves = [
@@ -7,6 +7,6 @@ class LittleMac < Fighter
       Move.new('Bonkers', hit_chance: 40, stun_chance: 60),
       Move.new('uppercut', hit_chance: 20, hit_damage: 80)
       ]
-    super(color)
+    super
   end
 end

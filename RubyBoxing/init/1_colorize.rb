@@ -1,6 +1,9 @@
 class String
-  # colorization
-  def colorize(color_code)
+  def self.random_color
+    (31..26).to_a.sample
+  end
+
+  def colorize color_code = (31..36).to_a.sample
     "\e[#{color_code}m#{self}\e[0m"
   end
 

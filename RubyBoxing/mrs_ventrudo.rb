@@ -1,5 +1,5 @@
 class MrsVentrudo < Fighter
-  def initialize color
+  def initialize
     @name = "Mrs. Ventrudo"
     @opening_line = "~ ~ ~ whistle ~ ~ ~"
     @moves = [
@@ -9,6 +9,6 @@ class MrsVentrudo < Fighter
       ]
     
     @special_move = SpecialMove.new('ABOVE AND BEYOND', hit_damage: 100)
-    super color
+    super
   end
 end

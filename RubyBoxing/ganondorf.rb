@@ -1,5 +1,5 @@
 class Ganondorf < Fighter
-  def initialize color
+  def initialize
     @name = "Calamity Ganon"
     @opening_line = "AHHHHHHHHHHHHH!!!!!!!!!"
     @moves = [
@@ -7,6 +7,6 @@ class Ganondorf < Fighter
         Move.new('Phantom Punch', hit_damage: 50),
         Move.new('Skull Bash', hit_damage: 77)
       ]
-    super(color)
+    super
   end
 end

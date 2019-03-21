@@ -1,6 +1,6 @@
 
 class CaptainFalcon < Fighter
-  def initialize color
+  def initialize
     @name = "Cap'n Falcon"
     @opening_line = "SHOW ME YA MOVES!"
     @moves = [
@@ -9,6 +9,6 @@ class CaptainFalcon < Fighter
         Move.new('Falcon Kick!!', hit_chance: 33, stun_chance: 33, hit_damage: 33),
         Move.new('Falcom PUNCH!!', hit_damage: 90, stun_chance: 0)
     ]
-    super(color)
+    super
   end
 end

@@ -1,5 +1,5 @@
 class Flash < Fighter
-  def initialize color
+  def initialize
     @name = "Flash"
     @opening_line = "Hey, what's that?!?!"
     @moves = [
@@ -9,6 +9,6 @@ class Flash < Fighter
       ]
 
     @special_move = SpecialMove.new('!~SUPPER STUN~!', stun_chance: 50, hit_damage: 50)
-    super(36) # cyan
+    super 36 # cyan
   end
 end
