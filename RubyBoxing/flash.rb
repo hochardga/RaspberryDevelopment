@@ -3,12 +3,12 @@ class Flash < Fighter
     @name = "Flash"
     @opening_line = "Hey, what's that?!?!"
     @moves = [
-      Move.new('looky here', hit_chance: 50, stun_chance: 40),
-      Move.new('over here', hit_chance: 40, stun_chance: 50),
-      Move.new('eye poke', hit_chance: 10, stun_chance: 80)
+      Move.new('looky here', EFFECT_TYPES::STUN, 10),
+      Move.new('over here', EFFECT_TYPES::STUN, 40),
+      Move.new('eye poke', EFFECT_TYPES::STUN, 80)
       ]
 
-    @special_move = SpecialMove.new('!~SUPPER STUN~!', stun_chance: 50, hit_damage: 50)
+    @special_move = SpecialMove.new('!~SUPPER STUN~!', EFFECT_TYPES::DAMAGE, 25)
     super 36 # cyan
   end
 end

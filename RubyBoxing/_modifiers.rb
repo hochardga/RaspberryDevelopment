@@ -32,7 +32,7 @@ module Modifiers
   DEFAULT_MOVES = [MovesList::BORING_PUNCH]
 
   # This is the fault special move if not declared
-  DEFAULT_SPECIAL_MOVES = SpecialMovesList::WHIRLING_PUNCH
+  DEFAULT_SPECIAL_MOVES = SpecialMovesList::BOOM
 
   # This affects how fast a fight is.
   # Default value is 1

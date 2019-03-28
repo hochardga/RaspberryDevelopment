@@ -6,15 +6,16 @@ puts "Fighting".yellow
 puts "   using the Ruby programming language".yellow
 puts ""
 
-# <KIDS> Edit the line below to change who is fighting who
-
 teams = []
-teams << [Fighter]
-teams << [Flash]
-#teams << [PrincessPeach, Bowser]
-#teams << [MrsVentrudo, RobertTheJanator]
+teams << Team.new(Fighter)
+teams << Team.new(Flash)
+#teams << Team.new(CaptainFalcon, Ganondorf, Simon)
+#teams << Team.new(PrincessPeach, Bowser)
+#teams << Team.new(MrsVentrudo, RobertTheJanator)
 
 Match.new(teams).fight
+#Match.new(CaptainFalcon, Ganondorf, Simon).fight
 
-#WhoIsBetter.between teams
+#WhoIsBetter.among(CaptainFalcon, Ganondorf, Simon)
+#Tournament.begin teams
 #Test.test

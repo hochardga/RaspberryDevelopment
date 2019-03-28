@@ -1,6 +1,6 @@
 # WARNING, YOU SHOULD NOT BE EDITING THIS FILE
 
-class Fighter
+class FighterOld
   attr_accessor :name, :opening_line, :hp, :moves, :special_move
   attr_accessor :starting_hp, :stun_timer
   attr_accessor :color

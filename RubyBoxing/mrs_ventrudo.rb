@@ -3,12 +3,12 @@ class MrsVentrudo < Fighter
     @name = "Mrs. Ventrudo"
     @opening_line = "~ ~ ~ whistle ~ ~ ~"
     @moves = [
-        Move.new('staring gaze', hit_chance: 50, stun_chance: 50),
-        Move.new('load whistle', hit_chance: 75, hit_damage: 25),
-        Move.new('teaching lesson', hit_chance: 75, heal_amount: 25),
+        Move.new('staring gaze', EFFECT_TYPES::STUN, 50),
+        Move.new('load whistle', EFFECT_TYPES::DAMAGE, 25),
+        Move.new('teaching lesson', EFFECT_TYPES::HEAL, 75),
       ]
     
-    @special_move = SpecialMove.new('ABOVE AND BEYOND', hit_damage: 100)
+    @special_move = SpecialMove.new 'ABOVE AND BEYOND', EFFECT_TYPES::DAMAGE, 10
     super
   end
 end

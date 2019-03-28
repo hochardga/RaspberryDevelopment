@@ -3,10 +3,10 @@ class PrincessPeach < Fighter
     @name = "Princess Peach"
     @opening_line = "Hi-cha"
     @moves = [
-        MovesList::HEAL,
-        Move.new('booty bump', hit_chance: 50, stun_chance: 50)
+        Move.new('heal', EFFECT_TYPES::HEAL, 50),
+        Move.new('booty bump', EFFECT_TYPES::STUN, 50)
       ]
-    @special_move = SpecialMove.new '*music*', heal_amount: 80
+    @special_move = SpecialMove.new '*music*', EFFECT_TYPES::HEAL, 20
     super 35 # pink
   end
 end

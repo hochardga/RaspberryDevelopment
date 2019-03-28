@@ -8,45 +8,36 @@ class Match
     @@output
   end
 
-  def initialize_new *options
-    teams_clazzes = []
+  def initialize *options
+    @teams = []
     @timer = Modifiers::FIGHT_SPEED_MODIFIER
-    @output = true
 
-    options.each do |option|
-      case 
-        when option.is_a?(Fighter)
-          teams_clazzes << [option]
-        when options.is_a?(Hash) && !option[:timer].nil?
-          @timer = option[:timer]
-        when options.is_a?(Hash) && !option[:output].nil?
-          @timer = option[:output]
-        when options.is_a?(Array)
-          teams_clazzes << option
+    options.flatten.each do |option|
+      case
+        when option.is_a?(Team)
+          @teams << option
+        when !option.is_a?(Hash) && (option == Fighter || option < Fighter)
+          @teams << Team.new(option)
+        when option.is_a?(Hash)
+          @timer = option[:timer] if !option[:timer].nil?
+          @@output = option[:output] if !option[:output].nil?        
         else 
           raise "Unsupported option #{option}"
       end
     end
 
-    teams_clazzes = teams_clazzes.first if teams_clazzes.count == 1
-    @teams = teams_clazzes.collect do |team_members_clazzes|
-      team_members_clazzes.collect do |member_clazz|
-        member_clazz.new
-      end
-    end
-
     if @@output
-      puts "A new match between ..."
-      @teams.each do |team_members|
+      puts "A new match between ...".bold.yellow 
+      @teams.each do |team|
         puts "... TEAM of"
-        team_members.each do |member|
+        team.members.each do |member|
           puts "   ... #{member.name_s} '#{member.opening_line_s}'"
         end
       end
     end
   end
 
-  def initialize teams_clazzes, timer=Modifiers::FIGHT_SPEED_MODIFIER, output=true
+  def initialize_old teams_clazzes, timer=Modifiers::FIGHT_SPEED_MODIFIER, output=true
     @teams = teams_clazzes.collect do |team_members_clazzes|
       team_members_clazzes.collect do |member_clazz|
         member_clazz.new
@@ -72,25 +63,21 @@ class Match
     sleep @timer
     while teams.count > 1
       perform_moves
-      @teams.each do |team_members|
-        team_members.delete_if do |member|
-          member.hp < 1
-        end
-      end
-      @teams.delete_if do |team_members|
-        team_members.empty?
-      end
+      
+      @teams.each {|team| team.scrum_members }
+      @teams.delete_if {|team| team.members.empty? }
     end
+
     announce_winner
   end
 
   def perform_moves
-    @teams.shuffle.each do |team_members|
-      team_members.shuffle.each do |member|
-        opponent_team = (@teams - team_members).sample
+    @teams.shuffle.each do |team|
+      team.members.shuffle.each do |member|
+        opponent_team = (@teams - [team]).sample
         next if opponent_team.nil?
 
-        opponent = opponent_team.sample
+        opponent = opponent_team.members.sample
         next if opponent.nil?
 
         member.fight opponent
@@ -100,17 +87,19 @@ class Match
   end
 
   def announce_winner
-    if @teams.empty?
+    winning_team = @teams.first
+
+    if winning_team.nil?
       puts "IT IS A DRAW".yellow.blink if @@output
       return nil
     else
       if @@output
         puts "And the winnder is ... "
-        @teams.first.each do |member|
+        winning_team.members.each do |member|
           puts member.name_s.blink
         end
       end
-      return @teams.first.collect &:class
+      return winning_team
     end
   end
 end

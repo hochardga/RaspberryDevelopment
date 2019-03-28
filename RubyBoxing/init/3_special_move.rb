@@ -1,6 +1,6 @@
 # WARNING, YOU SHOULD NOT BE EDITING THIS FILE
 
-class SpecialMove < Move
+class SpecialMoveOld < Move
 
   def initialize title, options = {}
     @title = title

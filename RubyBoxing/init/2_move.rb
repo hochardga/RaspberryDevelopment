@@ -1,6 +1,6 @@
 # WARNING, YOU SHOULD NOT BE EDITING THIS FILE
 
-class Move
+class MoveOld
   attr_accessor :title, :hit_chance, :hit_damage, :stun_chance, 
   :heal_amount
 

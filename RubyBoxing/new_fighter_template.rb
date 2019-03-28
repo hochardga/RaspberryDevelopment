@@ -8,20 +8,26 @@ class NewFighterTemplate < Fighter
     @name = "Replace this with your fighter's name"
     @opening_line = "Replace this with something fun"
     @moves = [
-        # add custom moves below
-        # moves cannot use more than 100 "points"
-        # you can set the following attributes
-        #    :hit_chance, :hit_damage, :stun_chance, :heal_amount
-        Move.new('powerfull kick', hit_damage: 80), # hit_chance will automatically get set to 20
-        Move.new('precise punch', hit_chance: 90), # hit_damage will automatically get set to 10
-        Move.new('stunning eye poke', stun_chance: 50), # hit_chance and hit_damage will automatically get set to 25
-        Move.new('healing dodge', hit_chance: 50, hit_damage: 25, heal_amount: 25), # heal_amount and stun_chance defaults to 0
-      ]
+      # <KIDS> The number at the end is the hit chance.  The rest gets applied to the effect.  Meaning low hit chance means more damage.
+      
+      # <KIDS> effects
+      # :damage     Takes away from opponents hp
+      # :heal       Adds to your hp
+      # :stun       Makes opponents skip rounds
+      # :haste      Gives you extra rounds
+      # :strengthen Doubles the effect
+      # :poison     Reduces opponents effect
+      Move.new('hard punch', :damage, 25),
+      Move.new('eye poke', :stun, 33),
+      Move.new('"I guess I should heal"', :heal, 90),
+      Move.new('"I an getting angry!"', :haste, 10),
+      Move.new('"Slow down man!"', :slow, 50),
+      Move.new('muscle flex', :strengthen, 40),
+      Move.new('make fun of', :poison, 80),
+    ]
     
-    # special moves will be used when your opponent is stunned causing more damage or more healing
-    # you can set the following attributes
-    #    :hit_damage, :stun_chance, :heal_amount
-    @special_move = SpecialMove.new('whirly windup', hit_damage: 80)
+    # special moves effects are trippled
+    @special_move = SpecialMove.new('whirly windup', :damage, 50)
     super
   end
 end

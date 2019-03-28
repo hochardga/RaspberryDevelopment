@@ -62,49 +62,43 @@ module Test
   def self.test
     [
       MovesList::BORING_PUNCH.heal_amount == 0,
-      #Match.new(FighterA, FighterB, FighterC).nil?,
-      #Match.new([FighterA, FighterB, FighterC]).nil?,
-      #Match.new([FighterA], [FighterB], [FighterC]).nil?,
-      #Match.new(FighterA, [FighterB, FighterC]).nil?,
     ].each_with_index do |test, i|
       raise "FAILED TEST #{i}" unless test
     end
 
-    #Match.new([[FighterA], [FighterD]], 0).fight
-    #return
 
     testing_rounds = 1000
     acceptable_deviation = 0.25
     puts "testing_rounds: #{testing_rounds}   acceptable_deviation: #{acceptable_deviation}"
     [
-      [[FighterA], [FighterB]],
-      [[FighterA], [FighterC]],
-      [[FighterA], [FighterD]],
-      [[FighterA], [FighterE]],
-      [[FighterB], [FighterC]],
-      [[FighterB], [FighterD]],
-      [[FighterB], [FighterE]],
-      [[FighterC], [FighterD]],
-      [[FighterC], [FighterE]],
-      [[FighterD], [FighterE]],
-      [[FighterA], [FighterB], [FighterC], [FighterD], [FighterE]],
-      [[FighterA, FighterB], [FighterC, FighterD], [FighterE, NewFighterTemplate]],
-      [[FighterA, FighterC], [FighterD, FighterE], [NewFighterTemplate, FighterB]],
-      [[FighterA, FighterD], [FighterE, NewFighterTemplate], [FighterB, FighterC]],
-      [[FighterA, FighterE], [NewFighterTemplate, FighterB], [FighterC, FighterD]],
-      [[FighterA, NewFighterTemplate], [FighterB, FighterC], [FighterD, FighterE]],
-      [[Fighter], [NewFighterTemplate]],
-      [[Fighter], [Flash]],
-      [[PrincessPeach], [Bowser]],
-      [[MrsVentrudo], [FighterA]],
-      [[MrsVentrudo], [FighterB]],
-      [[MrsVentrudo], [FighterC]],
-      [[MrsVentrudo], [FighterD]],
-      [[MrsVentrudo], [FighterE]],
-      [[MrsVentrudo], [Flash]],
-      [[MrsVentrudo], [NewFighterTemplate]],
+      [Team.new(FighterA), Team.new(FighterB)],
+      [Team.new(FighterA), Team.new(FighterC)],
+      [Team.new(FighterA), Team.new(FighterD)],
+      [Team.new(FighterA), Team.new(FighterE)],
+      [Team.new(FighterB), Team.new(FighterC)],
+      [Team.new(FighterB), Team.new(FighterD)],
+      [Team.new(FighterB), Team.new(FighterE)],
+      [Team.new(FighterC), Team.new(FighterD)],
+      [Team.new(FighterC), Team.new(FighterE)],
+      [Team.new(FighterD), Team.new(FighterE)],
+      [Team.new(FighterA), Team.new(FighterB), Team.new(FighterC), Team.new(FighterD), Team.new(FighterE)],
+      [Team.new(FighterA, FighterB), Team.new(FighterC, FighterD), Team.new(FighterE, NewFighterTemplate)],
+      [Team.new(FighterA, FighterC), Team.new(FighterD, FighterE), Team.new(NewFighterTemplate, FighterB)],
+      [Team.new(FighterA, FighterD), Team.new(FighterE, NewFighterTemplate), Team.new(FighterB, FighterC)],
+      [Team.new(FighterA, FighterE), Team.new(NewFighterTemplate, FighterB), Team.new(FighterC, FighterD)],
+      [Team.new(FighterA, NewFighterTemplate), Team.new(FighterB, FighterC), Team.new(FighterD, FighterE)],
+      [Team.new(Fighter), Team.new(NewFighterTemplate)],
+      [Team.new(Fighter), Team.new(Flash)],
+      [Team.new(PrincessPeach), Team.new(Bowser)],
+      [Team.new(MrsVentrudo), Team.new(FighterA)],
+      [Team.new(MrsVentrudo), Team.new(FighterB)],
+      [Team.new(MrsVentrudo), Team.new(FighterC)],
+      [Team.new(MrsVentrudo), Team.new(FighterD)],
+      [Team.new(MrsVentrudo), Team.new(FighterE)],
+      [Team.new(MrsVentrudo), Team.new(Flash)],
+      [Team.new(MrsVentrudo), Team.new(NewFighterTemplate)],
     ].each do |teams|
-      stats = WhoIsBetter.between(teams, testing_rounds, false)
+      stats = WhoIsBetter.among(teams, fights: testing_rounds, output: false)
       
       average = (testing_rounds.to_f - (stats[:nil] || 0)) / teams.flatten.count
       stats.delete nil
@@ -117,11 +111,24 @@ module Test
         value > stats[:_high] ||
         value < stats[:_low]
       end.empty?
-        puts "Unballanced #{teams} ...".yellow 
-        puts "#{stats}".red 
+        puts "Unballanced ...".yellow
+        stats.each do |team, count|
+          color = case
+            when count.nil?
+              puts "   #{team.to_s} : #{count}"
+            when [:_average, :_low, :_high].include?(team)
+              puts "   #{team.to_s} : #{count}".light_blue
+            when count < stats[:_low]
+              puts "   #{team.to_s} : #{count}".bold.red
+            when count > stats[:_high]
+              puts "   #{team.to_s} : #{count}".bold.green
+            else
+              puts "   #{team.to_s} : #{count}"
+          end
+        end
       end
     end
 
-    puts "Tests passed".yellow
+    puts "Tests complete".yellow
   end
 end

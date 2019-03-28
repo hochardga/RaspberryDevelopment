@@ -2,29 +2,48 @@
 # WARNING, YOU SHOULD NOT BE EDITING THIS FILE
 
 module WhoIsBetter
-  def self.between teams_clazzes, fights=500, output=true
+  def self.among *options
     stats = {}
-    
-    puts "= WHO IS BETTER BETWEEN".bold.yellow if output
-    teams_clazzes.each do |team_members_clazzes|
-      team_members_clazzes.each do |members_clazz|
-        stats[members_clazz] = 0
+
+    @teams = []
+    @fights = 500
+    @output = true
+
+    options.flatten.each do |option|
+      case
+        when option.is_a?(Team)
+          @teams << option
+        when !option.is_a?(Hash) && (option == Fighter || option < Fighter)
+          @teams << Team.new(option)
+        when option.is_a?(Hash)
+          @fights = option[:fights] if !option[:fights].nil?
+          @output = option[:output] if !option[:output].nil?        
+        else
+          raise "Unsupported option #{option}"
       end
+    end
+
+    
+    puts "WHO IS BETTER AMONG".bold.yellow if @output
+    @teams.each do |team|
+      stats[team] = 0
+      puts "... TEAM of" if @output
+      team.members.each do |member|
+        puts "   ... #{member.name_s} '#{member.opening_line_s}'"
+      end if @output
     end
     stats[nil] = 0
 
-    fights.times.each do |i|
-      winning_team = Match.new(teams_clazzes, 0, false).fight
-      if winning_team.nil? || winning_team.empty?
-        stats[nil] += 1
-      else
-        winning_team.each do |team_member|
-          stats[team_member] += 1
-        end
-      end
+    @fights.times.each do |i|
+      @teams.each &:generate_members
+      winning_team = Match.new(@teams, timer: 0, output: false).fight
+      stats[winning_team] += 1
     end
 
-    puts stats if output
+    stats.each do |team, count|
+      puts "#{team.to_s} : #{count}"
+    end if @output
+
     return stats
   end
 end
