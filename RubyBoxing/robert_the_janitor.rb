@@ -1,27 +1,29 @@
-# <KIDS> The name of this file must be lowercase with underscores and end with ".rb" like my_cool_dude.rb
-
-# <KIDS> You must the filename to main.rb
-
-# <KIDS> The class name must be snake-cased with no spaces.  Replace NewFighterTemplate with something like MyCoolDude
 class RobertTheJanator < Fighter
   def initialize
     @name = "Robert the Janator"
     @opening_line = "You're going to get moped!"
+
+    # <KIDS> The number at the end is the hit chance.  The rest gets applied to the effect.  Meaning low hit chance means more damage.
+    
+    # <KIDS> effects
+    # :damage     Takes away from opponents hp
+    # :heal       Adds to your hp
+    # :stun       Makes opponents skip rounds
+    # :haste      Gives you extra rounds
+    # :slow       Reduces opponents hit chance
+    # :strengthen Doubles the effect
+    # :poison     Reduces opponents effect
+
+    #Move.new('++NAME OF THE MOVE++', :++EFFECT TYPE++, ++HIT CHANCE++),
     @moves = [
-        # add custom moves below
-        # moves cannot use more than 100 "points"
-        # you can set the following attributes
-        #    :hit_chance, :hit_damage, :stun_chance, :heal_amount
-        Move.new('clean up', hit_chance: 50), # hit_chance will automatically get set to 10
-        Move.new('mop', hit_chance: 70), # hit_damage will automatically get set to 15
-        Move.new('twirl', stun_chance: 70), # hit_chance and hit_damage will automatically get set to 35
-        Move.new('generate', hit_chance: 50, hit_damage: 25, heal_amount: 35), # heal_amount and stun_chance defaults to 0
+        Move.new('clean up', :strengthen, 50),
+        Move.new('mop', :damage, 70),
+        Move.new('twirl', :stun, 70),
+        Move.new('generate', :heal, 50),
       ]
     
-    # special moves will be used when your opponent is stunned causing more damage or more healing
-    # you can set the following attributes
-    #    :hit_damage, :stun_chance, :heal_amount
-    @special_move = SpecialMove.new('bucket', hit_damage: 70, heal_amount: 25)
+    # special moves effects are trippled
+    @special_move = SpecialMove.new('bucket', :damage, 25)
     super 32
   end
 end

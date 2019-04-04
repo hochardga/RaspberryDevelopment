@@ -1,15 +1,25 @@
 class Bob < Fighter
   def initialize
     @name = "Bob"
-    @opening_line = "Hi, I'm"
+    @opening_line = "Hi, I'm bob"
     @moves = [
-        Move.new('Bobs kick kick', hit_damage: 7000),
-        Move.new('Bobby Bomber', hit_chance: 90),
-        Move.new('Bobs move', stun_chance: 50),
-        Move.new('healing dodge', hit_chance: 50, hit_damage: 25, heal_amount: 25),
-      ]
+        # <KIDS> effects
+      # :damage     Takes away from opponents hp
+      # :heal       Adds to your hp
+      # :stun       Makes opponents skip rounds
+      # :haste      Gives you extra rounds
+      # :slow
+      # :strengthen Doubles the effect
+      # :poison     Reduces opponents effect
+      
+      Move.new('hard punch', :damage, 25),
+      Move.new('Bobs kicky kick', :damage, 30),
+      Move.new('Bobby Bomber', :stun, 75),
+      Move.new('Bobs move', :stun, 25 ),
+      Move.new('healing dodge', :heal, 45),
+    ]
 
-    @special_move = SpecialMove.new('Bobs special move', hit_damage: 80)
+    @special_move = SpecialMove.new('Bobs special move', :stun, 35)
     super
   end
 end

@@ -15,8 +15,11 @@ class NewFighterTemplate < Fighter
       # :heal       Adds to your hp
       # :stun       Makes opponents skip rounds
       # :haste      Gives you extra rounds
+      # :slow       Reduces opponents hit chance
       # :strengthen Doubles the effect
       # :poison     Reduces opponents effect
+
+      #Move.new('++NAME OF THE MOVE++', :++EFFECT TYPE++, ++HIT CHANCE++),
       Move.new('hard punch', :damage, 25),
       Move.new('eye poke', :stun, 33),
       Move.new('"I guess I should heal"', :heal, 90),

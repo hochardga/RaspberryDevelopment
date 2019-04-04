@@ -5,7 +5,13 @@ class FighterA < Fighter
     @name = "Fighter A"
     @opening_line = "Fighter A"
     @moves = [
-      Move.new('high hit damage', hit_damage: 75)
+      Move.new('hard punch', :damage, 25),
+      Move.new('eye poke', :stun, 33),
+      Move.new('"I guess I should heal"', :heal, 90),
+      Move.new('"I an getting angry!"', :haste, 10),
+      Move.new('"Slow down man!"', :slow, 50),
+      Move.new('muscle flex', :strengthen, 40),
+      Move.new('make fun of', :poison, 80),
       ]
     super
   end
@@ -16,7 +22,7 @@ class FighterB < Fighter
     @name = "Fighter B"
     @opening_line = "Fighter B"
     @moves = [
-        Move.new('high hit chance with damage', hit_chance: 75)
+        Move.new('stun', :stun, 75)
       ]
     super
   end
@@ -27,7 +33,7 @@ class FighterC < Fighter
     @name = "Fighter C"
     @opening_line = "Fighter C"
     @moves = [
-        Move.new('high hit chance with stun', hit_chance: 75, stun_chance: 25)
+        Move.new('heal', :heal, 75)
       ]
     super
   end
@@ -38,7 +44,7 @@ class FighterD < Fighter
     @name = "Fighter D"
     @opening_line = "Fighter D"
     @moves = [
-        Move.new('high hit chance with heal', hit_chance: 75, heal_amount: 25)
+        Move.new('"I an getting angry!"', :haste, 10)
       ]
     super
   end

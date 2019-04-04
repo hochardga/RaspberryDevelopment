@@ -2,10 +2,14 @@
 
 module EFFECT_TYPES
   DAMAGE = :damage
-  STUN = :stun
   HEAL = :heal
-  SLOW = :slow
+
+  STUN = :stun
   HASTE = :haste
+  
+  SLOW = :slow
+  #FOCUS = :focus
+
   STENGTHEN = :strengthen
   POISON = :poison
 end
@@ -16,7 +20,7 @@ class Move
   def initialize title, effect = EFFECT_TYPES::DAMAGE, hit_chance = 50
     @title = title
     @effect = effect
-    @hit_chance = hit_chance
+    @hit_chance = hit_chance > 100 ? 90 : hit_chance
     caculate_effect_amount
   end
 
@@ -31,25 +35,27 @@ class Move
         raise "+hit_chance+ must be less than 100 for EFFECT_TYPES::HEAL" unless @hit_chance < 100
         @effect_amount = (100 - @hit_chance).to_f / 2
       when EFFECT_TYPES::STUN
-        raise "+hit_chance+ must be less than 90 for EFFECT_TYPES::STUN" unless @hit_chance < 90
+        raise "+hit_chance+ must be equal to or less than 90 for EFFECT_TYPES::STUN" unless @hit_chance <= 90
         @effect_amount = (100 - @hit_chance) / 10
         @hit_chance = 100 - effect_amount
       when EFFECT_TYPES::HASTE
-        raise "+hit_chance+ must be less than 90 for EFFECT_TYPES::HASTE" unless @hit_chance < 90
+        raise "+hit_chance+ must be equal to or less than 90 for EFFECT_TYPES::HASTE" unless @hit_chance <= 90
         @effect_amount = (100 - @hit_chance) / 10
         @hit_chance = 100 - effect_amount
       when EFFECT_TYPES::SLOW
-        raise "+hit_chance+ must be less than 90 for EFFECT_TYPES::SLOW" unless @hit_chance < 90
+        raise "+hit_chance+ must be equal to or less than 90 for EFFECT_TYPES::SLOW" unless @hit_chance <= 90
         @effect_amount = (100 - @hit_chance) / 10
         @hit_chance = 100 - effect_amount
       when EFFECT_TYPES::STENGTHEN
-        raise "+hit_chance+ must be less than 90 for EFFECT_TYPES::STENGTHEN" unless @hit_chance < 90
+        raise "+hit_chance+ must be equal to or less than 90 for EFFECT_TYPES::STENGTHEN" unless @hit_chance <= 90
         @effect_amount = (100 - @hit_chance) / 10
         @hit_chance = 100 - effect_amount
       when EFFECT_TYPES::POISON
-        raise "+hit_chance+ must be less than 90 for EFFECT_TYPES::POISON" unless @hit_chance < 90
+        raise "+hit_chance+ must be equal to or less than 90 for EFFECT_TYPES::POISON" unless @hit_chance <= 90
         @effect_amount = (100 - @hit_chance) / 10
         @hit_chance = 100 - effect_amount
+      else
+        #raise "Unsupported effect of #{@effect}"
     end
   end
 
@@ -91,6 +97,8 @@ class Move
           poison_timer = 1 + @effect_amount #* Modifiers::POISON_MODIFIER
           opponent.poison_timer = poison_timer
           puts "   #{opponent.name_s} POISONED for #{poison_timer.to_s.colorize fighter.color} rounds!!!" if Match.output?
+        else
+          #raise "Unsupported effect of #{@effect}"
       end
     end
   end
